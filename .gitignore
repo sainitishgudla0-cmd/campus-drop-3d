@@ -1,0 +1,21 @@
+node_modules
+.next
+.env*.local
+.vercel
+art-src
+*.tsbuildinfo
+next-env.d.ts
+
+# --- secrets & generated files (added for GitHub backup) ---
+.env
+.env*
+!.env.example
+node_modules
+.next
+out
+.vercel
+*.tsbuildinfo
+*.log
+.DS_Store
+*.pem
+*.key

@@ -1,0 +1,569 @@
+/* ═════════════════════════════════════════════════════════════════
+   CampusDrop 3D — design system
+   Type: Festivent's system (brush hero · bold uppercase display · condensed stickers)
+   Space & motion: Superlist's (one WebGL stage, saturated fields, diagonal wipes)
+   ═════════════════════════════════════════════════════════════════ */
+
+:root {
+  --coral: #ff5a36;
+  --coral-deep: #e8431f;
+  --night: #121019;
+  --night-2: #1d1a28;
+  --cream: #fff1d6;
+  --cream-2: #f6e5c3;
+  --ink: #17141f;
+  --sky: #9fd8ff;
+  --lime: #cff27a;
+  --lilac: #cdbbff;
+  --muted-ink: #5d5668;
+  --muted-cream: rgba(255, 241, 214, 0.72);
+  --err: #c4231a;
+  --ok: #1b7d4f;
+
+  --r-s: 8px;
+  --r-m: 12px;
+  --r-l: 18px;
+  --ease: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-io: cubic-bezier(0.65, 0, 0.35, 1);
+  --g: clamp(16px, 4vw, 48px);
+  color-scheme: light;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+html {
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+  overflow-x: clip;
+}
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+.lenis.lenis-stopped {
+  overflow: hidden;
+}
+body {
+  margin: 0;
+  background: var(--coral);
+  color: var(--cream);
+  font-family: var(--f-sans), system-ui, sans-serif;
+  font-size: 1.0625rem;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: clip;
+}
+img,
+svg,
+canvas {
+  display: block;
+  max-width: 100%;
+}
+a {
+  color: inherit;
+  text-decoration: none;
+}
+button,
+input,
+select,
+textarea {
+  font: inherit;
+  color: inherit;
+}
+button {
+  cursor: pointer;
+  background: none;
+  border: 0;
+  padding: 0;
+}
+::selection {
+  background: var(--lime);
+  color: var(--ink);
+}
+:focus-visible {
+  outline: 3px solid var(--sky);
+  outline-offset: 3px;
+  border-radius: 6px;
+}
+.sr-only {
+  position: absolute !important;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+.skip {
+  position: fixed;
+  left: 12px;
+  top: -60px;
+  z-index: 300;
+  padding: 10px 16px;
+  border-radius: 99px;
+  background: var(--ink);
+  color: var(--cream);
+  font-weight: 600;
+}
+.skip:focus {
+  top: 12px;
+}
+
+/* ─────────────── Type ─────────────── */
+
+/* Brush display: Caveat Brush tuned toward Festivent's hand-lettered hero
+   (rightward slant, heavier dry-brush stroke, tall condensed letters). */
+.brush {
+  font-family: var(--f-brush), "Caveat Brush", cursive;
+  font-weight: 400;
+  line-height: 0.88;
+  letter-spacing: -0.005em;
+  margin: 0;
+  -webkit-text-stroke: 0.032em currentColor;
+  paint-order: stroke fill;
+}
+.brush > span,
+.brush .split-word,
+.brush [data-hero="word"] {
+  display: inline-block;
+}
+/* the Festivent slant lives on the container so word animations never overwrite it */
+.brush {
+  transform: skewX(-9deg) scaleY(1.06);
+  transform-origin: 50% 100%;
+  font-synthesis: none;
+}
+
+/* Festivent display: bold geometric uppercase */
+.display {
+  font-family: var(--f-sans), sans-serif;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: -0.01em;
+  line-height: 1.02;
+  margin: 0;
+  font-size: clamp(2.2rem, 5vw, 5.2rem);
+}
+.display-sm {
+  font-family: var(--f-sans), sans-serif;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: -0.005em;
+  line-height: 1.1;
+  margin: 0;
+  font-size: clamp(1.15rem, 1.6vw, 1.55rem);
+}
+/* Festivent condensed labels */
+.label {
+  font-family: var(--f-cond), sans-serif;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.01em;
+  font-size: 0.95rem;
+  line-height: 1;
+}
+
+/* Tilted sticker labels (Festivent date tags) */
+.sticker {
+  display: inline-block;
+  padding: 0.32em 0.6em 0.26em;
+  font-family: var(--f-cond), sans-serif;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: -0.01em;
+  font-size: clamp(1.05rem, 1.6vw, 1.6rem);
+  line-height: 1;
+  color: var(--ink);
+  background: var(--sky);
+  transform: rotate(-4deg);
+  box-shadow: 0 10px 24px -14px rgba(0, 0, 0, 0.5);
+}
+.sticker--lime {
+  background: var(--lime);
+  transform: rotate(3deg);
+}
+.sticker--coral {
+  background: var(--coral);
+  color: var(--cream);
+}
+.sticker--cream {
+  background: var(--cream);
+}
+
+/* ─────────────── Pills (Superlist CTA language) ─────────────── */
+
+.pill {
+  --pill-bg: var(--ink);
+  --pill-fg: var(--cream);
+  --badge: var(--coral);
+  display: inline-flex;
+  align-items: center;
+  gap: 14px;
+  min-height: 52px;
+  padding: 0 6px 0 24px;
+  border-radius: 99px;
+  background: var(--pill-bg);
+  color: var(--pill-fg);
+  font-weight: 600;
+  font-size: 1rem;
+  white-space: nowrap;
+  transition: transform 0.4s var(--ease), background 0.25s, color 0.25s, box-shadow 0.35s;
+}
+.pill:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 16px 34px -18px rgba(0, 0, 0, 0.6);
+}
+.pill:active {
+  transform: scale(0.98);
+}
+.pill .arrow {
+  display: grid;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: var(--badge);
+  color: var(--cream);
+  transition: transform 0.45s var(--ease);
+}
+.pill:hover .arrow {
+  transform: rotate(-45deg);
+}
+.arrow--down svg {
+  transform: rotate(90deg);
+}
+.arrow--back svg {
+  transform: rotate(180deg);
+}
+.pill--cream {
+  --pill-bg: var(--cream);
+  --pill-fg: var(--ink);
+}
+.pill--ink {
+  --pill-bg: var(--ink);
+  --pill-fg: var(--cream);
+}
+.pill--line {
+  --pill-bg: transparent;
+  --pill-fg: currentColor;
+  padding: 0 24px;
+  box-shadow: inset 0 0 0 1.5px currentColor;
+}
+/* explicit colours: text stays readable in every state (was cream-on-cream) */
+.pill--line:hover,
+.pill--line:focus-visible {
+  background: var(--cream);
+  color: var(--ink);
+  box-shadow: inset 0 0 0 1.5px var(--cream);
+}
+.pill--line:active {
+  background: var(--cream-2);
+  color: var(--ink);
+}
+.pill--sm {
+  min-height: 42px;
+  padding-left: 18px;
+  font-size: 0.92rem;
+  gap: 10px;
+}
+.pill--sm .arrow {
+  width: 32px;
+  height: 32px;
+}
+.pill--lg {
+  min-height: 66px;
+  padding-left: 32px;
+  font-size: 1.15rem;
+}
+.pill--lg .arrow {
+  width: 54px;
+  height: 54px;
+}
+.pill[disabled],
+.pill[aria-disabled="true"] {
+  opacity: 0.45;
+  pointer-events: none;
+}
+.pill .spin {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  border: 2px solid currentColor;
+  border-right-color: transparent;
+  animation: spin 0.7s linear infinite;
+}
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* ─────────────── Logo ─────────────── */
+
+.logo {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  font-weight: 700;
+  font-size: 1.2rem;
+  letter-spacing: -0.02em;
+}
+.mark {
+  width: 34px;
+  height: 34px;
+  flex: none;
+  transition: transform 0.5s var(--ease);
+}
+.logo:hover .mark {
+  transform: rotate(-8deg) scale(1.05);
+}
+.logo__word {
+  font-weight: 800;
+  letter-spacing: -0.035em;
+  line-height: 1;
+}
+.logo__drop {
+  display: inline-block;
+  margin-left: 0.04em;
+  font-family: var(--f-brush), cursive;
+  font-weight: 400;
+  font-size: 1.22em;
+  letter-spacing: 0;
+  transform: skewX(-9deg) translateY(0.03em);
+}
+
+/* ─────────────── Nav ─────────────── */
+
+.nav {
+  position: fixed;
+  inset: 0 0 auto;
+  z-index: 50;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 16px var(--g);
+  color: var(--cream);
+  --mark-cut: var(--coral);
+  transition: color 0.4s;
+  mix-blend-mode: normal;
+}
+html[data-tone="cream"] .nav {
+  color: var(--ink);
+  --mark-cut: var(--cream);
+}
+html[data-tone="night"] .nav {
+  --mark-cut: var(--night);
+}
+.nav__links {
+  display: flex;
+  gap: 28px;
+  font-weight: 500;
+  font-size: 0.95rem;
+}
+.nav__links a {
+  position: relative;
+  padding: 4px 0;
+}
+.nav__links a::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 1.5px;
+  background: currentColor;
+  transform: scaleX(0);
+  transform-origin: right;
+  transition: transform 0.4s var(--ease);
+}
+.nav__links a:hover::after {
+  transform: scaleX(1);
+  transform-origin: left;
+}
+.nav__right {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+}
+.nav__login {
+  font-weight: 600;
+  font-size: 0.95rem;
+}
+html[data-tone="cream"] .nav .pill--ink {
+  --pill-bg: var(--ink);
+}
+html[data-tone="coral"] .nav .pill--ink .arrow {
+  background: var(--coral-deep);
+}
+.nav__menu {
+  display: none;
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  position: relative;
+  box-shadow: inset 0 0 0 1.5px currentColor;
+}
+.nav__menu span:not(.sr-only) {
+  position: absolute;
+  left: 12px;
+  right: 12px;
+  height: 2px;
+  background: currentColor;
+  transition: transform 0.35s var(--ease), top 0.35s var(--ease);
+}
+.nav__menu span:nth-child(1) {
+  top: 16px;
+}
+.nav__menu span:nth-child(2) {
+  top: 24px;
+}
+.nav.is-open .nav__menu span:nth-child(1) {
+  top: 20px;
+  transform: rotate(45deg);
+}
+.nav.is-open .nav__menu span:nth-child(2) {
+  top: 20px;
+  transform: rotate(-45deg);
+}
+.nav__sheet {
+  position: absolute;
+  top: calc(100% - 4px);
+  left: 10px;
+  right: 10px;
+  display: grid;
+  padding: 10px;
+  border-radius: var(--r-l);
+  background: var(--ink);
+  color: var(--cream);
+  box-shadow: 0 30px 60px -30px rgba(0, 0, 0, 0.7);
+  animation: sheetIn 0.4s var(--ease);
+}
+.nav__sheet a {
+  padding: 14px 12px;
+  font-family: var(--f-cond), sans-serif;
+  font-weight: 800;
+  text-transform: uppercase;
+  font-size: 1.6rem;
+  line-height: 1;
+  border-bottom: 1px solid rgba(255, 241, 214, 0.12);
+}
+.nav__sheet a:last-child {
+  border: 0;
+}
+@keyframes sheetIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+}
+@media (max-width: 360px) {
+  .nav .pill {
+    display: none;
+  }
+  .logo {
+    font-size: 1.08rem;
+  }
+}
+@media (max-width: 899px) {
+  .nav__links,
+  .nav__login {
+    display: none;
+  }
+  .nav__menu {
+    display: block;
+  }
+  .nav {
+    padding: 12px 16px;
+  }
+}
+
+/* ─────────────── Stage (backdrop + WebGL) ─────────────── */
+
+.stage {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+}
+.bd {
+  position: absolute;
+  inset: 0;
+}
+.bd--coral {
+  background: radial-gradient(120% 90% at 50% 10%, #ff7a52 0%, var(--coral) 45%, var(--coral-deep) 100%);
+}
+.bd--night {
+  background: radial-gradient(90% 70% at 30% 40%, var(--night-2), var(--night) 70%);
+}
+.bd--cream {
+  background: radial-gradient(100% 80% at 60% 30%, #fff8e8, var(--cream) 55%, var(--cream-2));
+}
+.stage__gl {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  transition: opacity 1.2s var(--ease);
+}
+.stage__gl.is-ready {
+  opacity: 1;
+}
+.stage__canvas {
+  width: 100% !important;
+  height: 100% !important;
+}
+.stage__static {
+  position: absolute;
+  inset: 0;
+}
+.stage__static-card {
+  position: absolute;
+  width: clamp(70px, 10vw, 140px);
+  border-radius: 50%;
+  border: 5px solid var(--cream);
+  box-shadow: 0 20px 40px -20px rgba(0, 0, 0, 0.5);
+}
+.stage__static-card.s0 {
+  left: 8%;
+  top: 22%;
+}
+.stage__static-card.s1 {
+  right: 9%;
+  top: 30%;
+}
+.stage__static-card.s2 {
+  left: 18%;
+  bottom: 14%;
+}
+.stage__static-card.s3 {
+  right: 20%;
+  top: 10%;
+}
+.stage__static-card.s4 {
+  right: 12%;
+  bottom: 12%;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+.nav__sheet[hidden] {
+  display: none;
+}
+@media (min-width: 900px) {
+  .nav__sheet {
+    display: none !important;
+  }
+}
